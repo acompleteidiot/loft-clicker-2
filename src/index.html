@@ -20,26 +20,58 @@
       name="keywords"
       content="loft, clicker, 2, loft tower 2, loft tower, softrooms, bingus"
     />
-    <meta name="color-scheme" content="light only" />
+    <meta name="color-scheme" content="dark only" />
     <title>Loft Clicker 2</title>
     <link rel="icon" type="image/x-icon" href="img/loftIcon.png?raw=true" />
     <link rel="stylesheet" href="style.css" />
     <!--
   <link href="style.css" rel="stylesheet" type="text/css" /> 
   --></head>
+  <!-- cringelord -->
 </html>
 <body>
-  <button class="imgButton" id="loftButton" onclick="loftClick()">
-    <img
-      src="img/loftButton.png?raw=true"
-    />
-  </button>
-  <p>
-    <span id="loftClicks">0</span> loft clicks <br />
-    <span id="loftClickspClick">0</span> loft clicks per click
-  </p>
-  <button class="button" id="resetButton" onclick="reset()">Reset Game</button>
-  <button class="button" id="saveButton" onclick="save()">Save Game</button>
+  <div id="containerContainer">
+    <div
+      id="loftContainer"
+      style="position: relative; width: 50%; margin: auto"
+    >
+      <button class="imgButton" id="loftButton" onclick="loftClick()">
+        <img src="img/loftButton.png?raw=true" />
+      </button>
+      <p>
+        <span id="loftClicks">0</span> loft clicks <br />
+        <span id="loftClickspClick">0</span> loft clicks per click
+        <span id="loftPetsTracker" style="display: none"
+          ><br /><span id="loftPets">0</span> loft pet<span id="loftPetsPlural"
+            >s</span
+          ></span
+        >
+        <span id="loftPetsCostTracker" style="display: none"
+          ><br />
+          next loft pet costs <span id="loftPetCost">0</span> loft clicks</span
+        >
+      </p>
+      <button class="button" id="resetButton" onclick="resetButton()">
+        Reset Game
+      </button>
+      <button class="button" id="saveButton" onclick="save()">Save Game</button>
+      <div id="loftBuildings">
+        <button
+          class="button"
+          id="loftPet"
+          style="opacity: 0"
+          onclick="buyBuilding(1)"
+        >
+          Buy Loft Pet
+        </button>
+      </div>
+    </div>
+    <div id="woftContainer" style="position: relative; width: 50%">
+      <button class="imgButton" id="woftButton" onclick="woftClick()">
+        <img src="img/woftButton.png?raw=true" />
+      </button>
+    </div>
+  </div>
 
   <!-- scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

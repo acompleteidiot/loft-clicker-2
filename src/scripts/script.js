@@ -48,6 +48,17 @@ function loadGame(loadgame) {
 
 load()
 
+function updateLarge() {
+    // happens every 500ms
+
+    // update gold
+    document.getElementById("loftClicks").textContent = game.loftClicks.toNumber().toLocaleString()
+    document.getElementById("loftClickspClick").textContent = game.loftClickspClick.toNumber().toLocaleString()
+}
+
+updateLarge()
+setInterval(updateLarge, 500)
+
 function autosave() {
     setTimeout(autosave, game.Settings.autosaveInterval * 1000)
     save()

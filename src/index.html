@@ -1,29 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <meta content="Loft Clicker 2" property="og:title" />
-  <meta content="my favorite part was when he said Its loftin time. and lofted all over the place"
-    property="og:description" />
-  <meta content="https://github.com/acompleteidiot/loft-clicker-2/blob/main/src/" property="og:url">
-  <meta content="#408000" data-react-helmet="true" name="theme-color" />
-  <meta name="keywords" content="loft, clicker, 2, loft tower 2, loft tower, softrooms, bingus">
-  <meta name="color-scheme" content="light only">
-  <title>Loft Clicker 2</title>
-  <link rel="icon" type="image/x-icon" href="img/loftIcon.png?raw=true">
-  <link rel="stylesheet" href="style.css" />
-  <!--
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <meta content="Loft Clicker 2" property="og:title" />
+    <meta
+      content="my favorite part was when he said Its loftin time. and lofted all over the place"
+      property="og:description"
+    />
+    <meta
+      content="https://github.com/acompleteidiot/loft-clicker-2/blob/main/src/"
+      property="og:url"
+    />
+    <meta content="#408000" data-react-helmet="true" name="theme-color" />
+    <meta
+      name="keywords"
+      content="loft, clicker, 2, loft tower 2, loft tower, softrooms, bingus"
+    />
+    <meta name="color-scheme" content="light only" />
+    <title>Loft Clicker 2</title>
+    <link rel="icon" type="image/x-icon" href="img/loftIcon.png?raw=true" />
+    <link rel="stylesheet" href="style.css" />
+    <!--
   <link href="style.css" rel="stylesheet" type="text/css" /> 
-  -->
-  </head>
+  --></head>
 </html>
 <body>
   <button class="imgButton" id="loftButton" onclick="loftClick()">
-    <img src="img/loftButton.png?raw=true" style="width: 128px; height: 128px;" />
+    <img
+      src="img/loftButton.png?raw=true"
+    />
   </button>
-  <p>You have <a id="loftClicks">0</a> loft clicks!</p>
-  <button class="button" id="resetButton" onclick="resetGame()">Reset Game</button>
+  <p>
+    <span id="loftClicks">0</span> loft clicks <br />
+    <span id="loftClickspClick">0</span> loft clicks per click
+  </p>
+  <button class="button" id="resetButton" onclick="reset()">Reset Game</button>
   <button class="button" id="saveButton" onclick="save()">Save Game</button>
 
   <!-- scripts -->

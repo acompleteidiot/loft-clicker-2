@@ -1,0 +1,33 @@
+.imgButton {
+  border-radius: 0;
+  border: none !important;
+  background: transparent;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  border-width: 0;
+}
+
+.imgButton img {
+  border: none !important;
+  outline: none !important;
+}
+
+.imgButton:hover img {
+  filter: brightness(0.8);
+  transition: filter 0.2s ease-in-out;
+}
+
+.button {
+  background-color: #1c87c9;
+  border: none;
+  color: white;
+  padding: 20px 34px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 0;
+}

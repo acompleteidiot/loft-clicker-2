@@ -12,7 +12,23 @@
   <meta name="color-scheme" content="light only">
   <title>Loft Clicker 2</title>
   <link rel="icon" type="image/x-icon" href="img/loftIcon.png?raw=true">
-  <link rel="stylesheet" href="98.css" />
+  <link rel="stylesheet" href="style.css" />
+  <!--
   <link href="style.css" rel="stylesheet" type="text/css" /> 
+  -->
   </head>
 </html>
+<body>
+  <button class="imgButton" id="loftButton" onclick="loftClick()">
+    <img src="img/loftButton.png?raw=true" style="width: 128px; height: 128px;" />
+  </button>
+  <p>You have <a id="loftClicks">0</a> loft clicks!</p>
+  <button class="button" id="resetButton" onclick="resetGame()">Reset Game</button>
+  <button class="button" id="saveButton" onclick="save()">Save Game</button>
+
+  <!-- scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="scripts/break_eternity.js"></script>
+  <script src="scripts/script.js"></script>
+  <script src="scripts/loft.js"></script>
+</body>

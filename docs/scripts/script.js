@@ -72,6 +72,7 @@ function loadFromString() {
       loadGame(loadgame, game);
     }
   }
+  location.reload()
 }
 
 function exportToString() {
@@ -138,6 +139,12 @@ function burgerCalc() {
   return production.mul(productionMult).pow(productionExp);
 }
 
+function buildingCalc(buildingId) {
+  if (buildingId == 1) {
+    return game.Buildings.loftPet.owned.mul(game.Buildings.loftPet.power)
+  }
+}
+
 function woftPowerCalc() {
   production = game.Buildings.woftPet.power.mul(game.Buildings.woftPet.owned);
 
@@ -169,27 +176,18 @@ function updateVisual() {
     .toNumber()
     .toLocaleString();
   if (game.Visual.loftBuildingHover != 0) {
-    const buildingKeys = [null, "loftPet", "woftPet"];
-    let currentKey = buildingKeys[Number(game.Visual.loftBuildingHover)];
-
     const buildingHoverDesc = Array.from(
       document
         .getElementById("loftBuildingDescription")
         .getElementsByTagName("span"),
     );
-    let hoverDescBuilding = game.Buildings[currentKey];
-    if (hoverDescBuilding && buildingHoverDesc.length >= 4) {
-      buildingHoverDesc[0].textContent = hoverDescBuilding.descName;
-      buildingHoverDesc[1].textContent = hoverDescBuilding.cost
-        .toNumber()
-        .toLocaleString();
-      buildingHoverDesc[3].textContent = hoverDescBuilding.owned
-        .toNumber()
-        .toLocaleString();
-      buildingHoverDesc[2].textContent = hoverDescBuilding.owned
-        .mul(hoverDescBuilding.power)
-        .toNumber()
-        .toLocaleString();
+
+    if (game.Visual.loftBuildingHover == 1) {
+      let buildingInfo = game.Buildings.loftPet
+      buildingHoverDesc[0].textContent = buildingInfo.descName
+      buildingHoverDesc[1].textContent = buildingInfo.cost.toNumber().toLocaleString()
+      buildingHoverDesc[2].textContent = buildingCalc(1).toNumber().toLocaleString()
+      buildingHoverDesc[3].textContent = buildingInfo.cost.toNumber().toLocaleString()
     }
   }
 

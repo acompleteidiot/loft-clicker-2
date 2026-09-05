@@ -94,25 +94,34 @@ function loadGame(loadgame, gameObject = game) {
 
 load()
 
-function updateCurrency() {
-    // increase loft stuff
+function loftClicksCalc() {
     production = game.Buildings.loftPet.power.mul(game.Buildings.loftPet.owned)
 
     productionMult = new Decimal(1)
 
     productionExp = new Decimal(1)
 
-    game.loftClicks = game.loftClicks.add(production.div(2.0)).mul(productionMult).pow(productionExp)
+    return production.div(2.0).mul(productionMult).pow(productionExp)
+}
 
-    // increase woft stuff
-
+function woftPowerCalc() {
     production = game.Buildings.woftPet.power.mul(game.Buildings.woftPet.owned)
 
     productionMult = new Decimal(1)
 
     productionExp = new Decimal(1)
 
-    game.woftPower = game.woftPower.add(production.div(2.0)).mul(productionMult).pow(productionExp)
+    return production.div(2.0).mul(productionMult).pow(productionExp)
+}
+
+function updateCurrency() {
+    // increase loft stuff
+    
+    game.loftClicks = game.loftClicks.add(loftClicksCalc())
+
+    // increase woft stuff
+
+    game.woftPower = game.woftPower.add(woftPowerCalc())
 }
 
 function updateVisual() {
@@ -126,6 +135,8 @@ function updateVisual() {
 
     if (game.Buildings.loftPet.owned.gte(1)) {
         document.getElementById("loftPetsTracker").style.display = "inline"
+        document.getElementById("loftClicksPerSecond").style.display = "inline"
+        document.getElementById("loftClicksPerSecNum").textContent = loftClicksCalc().mul(2).toNumber().toLocaleString()
     }
     if (game.loftClicks.gte(10) || game.Buildings.loftPet.owned.gte(1)) {
         document.getElementById("loftPet").style.opacity = "1"
@@ -140,12 +151,11 @@ function updateVisual() {
     // update woft stuff
     document.getElementById("woftClicks").textContent = game.woftClicks.toNumber().toLocaleString()
     document.getElementById("woftClickspClick").textContent = game.woftClickspClick.toNumber().toLocaleString()
-    document.getElementById("woftPower").textContent = game.woftPower.toNumber().toLocaleString()
-    document.getElementById("woftClickspClickButFr").textContent = woftCalc().toNumber().toLocaleString()
-    document.getElementById("woftPets").textContent = game.Buildings.woftPet.owned.toNumber().toLocaleString()
-    document.getElementById("woftPetCost").textContent = game.Buildings.woftPet.cost.toNumber().toLocaleString()
+    
+    
 
     if (game.woftClicks.gte(10) || game.Buildings.woftPet.owned.gte(1)) {
+        document.getElementById("woftPetCost").textContent = game.Buildings.woftPet.cost.toNumber().toLocaleString()
         document.getElementById("woftPetsCostTracker").style.display = "inline"
         document.getElementById("woftPet").style.visibility = "visible"
     }
@@ -153,6 +163,10 @@ function updateVisual() {
         document.getElementById("woftPetsTracker").style.display = "inline"
         document.getElementById("woftPet").style.display = "inline"
         document.getElementById("woftPowerTracker").style.display = "inline"
+        document.getElementById("woftClickspClickActual").style.display = "inline"
+        document.getElementById("woftClickspClickActualNum").textContent = woftCalc().toNumber().toLocaleString()
+        document.getElementById("woftPets").textContent = game.Buildings.woftPet.owned.toNumber().toLocaleString()
+        document.getElementById("woftPower").textContent = game.woftPower.toNumber().toLocaleString()
     }
 }
 

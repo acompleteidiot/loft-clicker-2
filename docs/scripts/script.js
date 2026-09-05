@@ -184,7 +184,7 @@ function buyBuilding(buildingId) {
         if (game.woftClicks.gte(game.Buildings.woftPet.cost)) {
             game.woftClicks = game.woftClicks.sub(game.Buildings.woftPet.cost)
             game.Buildings.woftPet.owned = game.Buildings.woftPet.owned.add(1)
-            game.Buildings.woftPet.cost = new Decimal(1.3).pow(game.Buildings.woftPet.owned).mul(10).floor()
+            game.Buildings.woftPet.cost = new Decimal(1.5).pow(game.Buildings.woftPet.owned).mul(10).floor()
             updateVisual()
         }
     }

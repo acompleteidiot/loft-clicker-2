@@ -1,6 +1,7 @@
 var game = {};
 
-const mobile = window.navigator.maxTouchPoints > 0
+const mobile = window.navigator.maxTouchPoints > 0;
+console.log(mobile);
 
 function reset() {
   game = {
@@ -168,12 +169,14 @@ function updateVisual() {
     .toNumber()
     .toLocaleString();
   if (game.Visual.loftBuildingHover != 0) {
-    const buildingKeys = [null, "loftPet", "woftPet"]
-    let currentKey = buildingKeys[Number(game.Visual.loftBuildingHover)]
+    const buildingKeys = [null, "loftPet", "woftPet"];
+    let currentKey = buildingKeys[Number(game.Visual.loftBuildingHover)];
 
     const buildingHoverDesc = Array.from(
-    document.getElementById("loftBuildingDescription").getElementsByTagName("span")
-  )
+      document
+        .getElementById("loftBuildingDescription")
+        .getElementsByTagName("span"),
+    );
     let hoverDescBuilding = game.Buildings[currentKey];
     if (hoverDescBuilding && buildingHoverDesc.length >= 4) {
       buildingHoverDesc[0].textContent = hoverDescBuilding.descName;
@@ -183,9 +186,10 @@ function updateVisual() {
       buildingHoverDesc[3].textContent = hoverDescBuilding.owned
         .toNumber()
         .toLocaleString();
-      buildingHoverDesc[2].textContent = hoverDescBuilding.owned.mul(
-        hoverDescBuilding.power,
-      ).toNumber().toLocaleString();
+      buildingHoverDesc[2].textContent = hoverDescBuilding.owned
+        .mul(hoverDescBuilding.power)
+        .toNumber()
+        .toLocaleString();
     }
   }
 
@@ -261,13 +265,21 @@ autosave();
 
 function buyBuilding(type, buildingId) {
   if (mobile) {
-    if (game.Visual.loftBuildingHover == buildingId || game.Visual.woftBuildingHover == buildingId) {
-      // do nothing so it continues
+    if (
+      game.Visual.loftBuildingHover == buildingId ||
+      game.Visual.woftBuildingHover == buildingId
+    ) {
     } else {
-      hoverBuilding(type, buildingId)
-      return
+      if (type == 1) {
+        game.Visual.loftBuildingHover = buildingId;
+      } else if (type == 2) {
+        game.Visual.woftBuildingHover = buildingId;
+      }
+      updateVisual();
+      return;
     }
   }
+
   if (buildingId == 1) {
     if (game.burger.gte(game.Buildings.loftPet.cost)) {
       game.burger = game.burger.sub(game.Buildings.loftPet.cost);
@@ -293,10 +305,12 @@ function buyBuilding(type, buildingId) {
 }
 
 function hoverBuilding(type, buildingId) {
-  if (type == 1) {
-    game.Visual.loftBuildingHover = buildingId;
-  } else if (type == 2) {
-    game.Visual.woftBuildingHover = buildingId;
+  if (!mobile) {
+    if (type == 1) {
+      game.Visual.loftBuildingHover = buildingId;
+    } else if (type == 2) {
+      game.Visual.woftBuildingHover = buildingId;
+    }
   }
 }
 

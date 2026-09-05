@@ -18,11 +18,12 @@ function reset() {
                 power: new Decimal(0.05)
             }
         },
-        loftClicks: new Decimal(0),
-        loftClickspClick: new Decimal(1),
-        woftClicks: new Decimal(0),
-        woftClickspClick: new Decimal(1),
-        woftPower: new Decimal(1)
+        burger: new Decimal(0),
+        burgerpClick: new Decimal(1),
+        hotdog: new Decimal(0),
+        hotdogpClick: new Decimal(1),
+        woftPower: new Decimal(1),
+        woftUnlock: false
     }
 }
 
@@ -94,7 +95,7 @@ function loadGame(loadgame, gameObject = game) {
 
 load()
 
-function loftClicksCalc() {
+function burgerCalc() {
     production = game.Buildings.loftPet.power.mul(game.Buildings.loftPet.owned)
 
     productionMult = new Decimal(1)
@@ -117,7 +118,7 @@ function woftPowerCalc() {
 function updateCurrency() {
     // increase loft stuff
     
-    game.loftClicks = game.loftClicks.add(loftClicksCalc())
+    game.burger = game.burger.add(burgerCalc())
 
     // increase woft stuff
 
@@ -126,8 +127,8 @@ function updateCurrency() {
 
 function updateVisual() {
     // update loft stuff
-    document.getElementById("loftClicks").textContent = game.loftClicks.toNumber().toLocaleString()
-    document.getElementById("loftClickspClick").textContent = game.loftClickspClick.toNumber().toLocaleString()
+    document.getElementById("burger").textContent = game.burger.toNumber().toLocaleString()
+    document.getElementById("burgerpClick").textContent = game.burgerpClick.toNumber().toLocaleString()
     
     // loft pet stuff
     document.getElementById("loftPets").textContent = game.Buildings.loftPet.owned.toNumber().toLocaleString()
@@ -135,10 +136,10 @@ function updateVisual() {
 
     if (game.Buildings.loftPet.owned.gte(1)) {
         document.getElementById("loftPetsTracker").style.display = "inline"
-        document.getElementById("loftClicksPerSecond").style.display = "inline"
-        document.getElementById("loftClicksPerSecNum").textContent = loftClicksCalc().mul(2).toNumber().toLocaleString()
+        document.getElementById("burgerPerSecond").style.display = "inline"
+        document.getElementById("burgerPerSecNum").textContent = burgerCalc().mul(2).toNumber().toLocaleString()
     }
-    if (game.loftClicks.gte(10) || game.Buildings.loftPet.owned.gte(1)) {
+    if (game.burger.gte(10) || game.Buildings.loftPet.owned.gte(1)) {
         document.getElementById("loftPet").style.opacity = "1"
         document.getElementById("loftPetsCostTracker").style.display = "inline"
     }
@@ -149,24 +150,30 @@ function updateVisual() {
     }
 
     // update woft stuff
-    document.getElementById("woftClicks").textContent = game.woftClicks.toNumber().toLocaleString()
-    document.getElementById("woftClickspClick").textContent = game.woftClickspClick.toNumber().toLocaleString()
-    
-    
 
-    if (game.woftClicks.gte(10) || game.Buildings.woftPet.owned.gte(1)) {
-        document.getElementById("woftPetCost").textContent = game.Buildings.woftPet.cost.toNumber().toLocaleString()
-        document.getElementById("woftPetsCostTracker").style.display = "inline"
-        document.getElementById("woftPet").style.visibility = "visible"
-    }
-    if (game.Buildings.woftPet.owned.gte(1)) {
-        document.getElementById("woftPetsTracker").style.display = "inline"
-        document.getElementById("woftPet").style.display = "inline"
-        document.getElementById("woftPowerTracker").style.display = "inline"
-        document.getElementById("woftClickspClickActual").style.display = "inline"
-        document.getElementById("woftClickspClickActualNum").textContent = woftCalc().toNumber().toLocaleString()
-        document.getElementById("woftPets").textContent = game.Buildings.woftPet.owned.toNumber().toLocaleString()
-        document.getElementById("woftPower").textContent = game.woftPower.toNumber().toLocaleString()
+    if (game.burger.gte(100000)) {
+        if (!game.woftUnlock) {
+            game.woftUnlock = true
+            document.getElementById("woftContainer").style.opacity = "1"
+        }
+        
+        document.getElementById("hotdog").textContent = game.hotdog.toNumber().toLocaleString()
+        document.getElementById("hotdogpClick").textContent = game.hotdogpClick.toNumber().toLocaleString()
+
+        if (game.hotdog.gte(10) || game.Buildings.woftPet.owned.gte(1)) {
+            document.getElementById("woftPetCost").textContent = game.Buildings.woftPet.cost.toNumber().toLocaleString()
+            document.getElementById("woftPetsCostTracker").style.display = "inline"
+            document.getElementById("woftPet").style.visibility = "visible"
+        }
+        if (game.Buildings.woftPet.owned.gte(1)) {
+            document.getElementById("woftPetsTracker").style.display = "inline"
+            document.getElementById("woftPet").style.display = "inline"
+            document.getElementById("woftPowerTracker").style.display = "inline"
+            document.getElementById("hotdogpClickActual").style.display = "inline"
+            document.getElementById("hotdogpClickActualNum").textContent = woftCalc().toNumber().toLocaleString()
+            document.getElementById("woftPets").textContent = game.Buildings.woftPet.owned.toNumber().toLocaleString()
+            document.getElementById("woftPower").textContent = game.woftPower.toNumber().toLocaleString()
+        }
     }
 }
 
@@ -187,16 +194,16 @@ autosave()
 
 function buyBuilding(buildingId) {
     if (buildingId == 1) {
-        if (game.loftClicks.gte(game.Buildings.loftPet.cost)) {
-            game.loftClicks = game.loftClicks.sub(game.Buildings.loftPet.cost)
+        if (game.burger.gte(game.Buildings.loftPet.cost)) {
+            game.burger = game.burger.sub(game.Buildings.loftPet.cost)
             game.Buildings.loftPet.owned = game.Buildings.loftPet.owned.add(1)
             game.Buildings.loftPet.cost = new Decimal(1.15).pow(game.Buildings.loftPet.owned).mul(10).floor()
             updateVisual()
         }
     }
     if (buildingId == 2) {
-        if (game.woftClicks.gte(game.Buildings.woftPet.cost)) {
-            game.woftClicks = game.woftClicks.sub(game.Buildings.woftPet.cost)
+        if (game.hotdog.gte(game.Buildings.woftPet.cost)) {
+            game.hotdog = game.hotdog.sub(game.Buildings.woftPet.cost)
             game.Buildings.woftPet.owned = game.Buildings.woftPet.owned.add(1)
             game.Buildings.woftPet.cost = new Decimal(1.5).pow(game.Buildings.woftPet.owned).mul(10).floor()
             updateVisual()

@@ -1,5 +1,5 @@
 function woftClick() {
-    game.woftClicks = game.woftClicks.add(woftCalc())
+    game.hotdog = game.hotdog.add(woftCalc())
     updateVisual()
 }
 
@@ -8,5 +8,5 @@ function woftCalc() {
     multiplier = new Decimal(1)
     multiplier = multiplier.mul(game.woftPower)
 
-    return game.woftClickspClick.mul(multiplier)
+    return game.hotdogpClick.mul(multiplier)
 }

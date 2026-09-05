@@ -4,7 +4,8 @@ function reset() {
   game = {
     Settings: {
       autosave: true,
-      autosaveInterval: 30,
+      autosaveInterval: new Decimal(30),
+      updateInterval: new Decimal(0.5)
     },
     Buildings: {
       loftPet: {
@@ -121,7 +122,7 @@ function burgerCalc() {
 
   productionExp = new Decimal(1);
 
-  return production.div(2.0).mul(productionMult).pow(productionExp);
+  return production.mul(productionMult).pow(productionExp);
 }
 
 function woftPowerCalc() {
@@ -131,17 +132,19 @@ function woftPowerCalc() {
 
   productionExp = new Decimal(1);
 
-  return production.div(2.0).mul(productionMult).pow(productionExp);
+  return production.mul(productionMult).pow(productionExp);
 }
 
 function updateCurrency() {
+  timescale = 1/(game.Settings.updateInterval)
+  
   // increase loft stuff
 
-  game.burger = game.burger.add(burgerCalc());
+  game.burger = game.burger.add(burgerCalc().div(timescale));
 
   // increase woft stuff
 
-  game.woftPower = game.woftPower.add(woftPowerCalc());
+  game.woftPower = game.woftPower.add(woftPowerCalc().div(timescale));
 }
 
 function updateVisual() {
@@ -164,7 +167,6 @@ function updateVisual() {
     document.getElementById("loftPetsTracker").style.display = "inline";
     document.getElementById("burgerPerSecond").style.display = "inline";
     document.getElementById("burgerPerSecNum").textContent = burgerCalc()
-      .mul(2)
       .toNumber()
       .toLocaleString();
   }
@@ -214,6 +216,12 @@ function updateVisual() {
         .toLocaleString();
     }
   }
+
+  // settings
+  if (document.getElementById("settingsContainer").style.display === "block") {
+    document.getElementById("currentAutosaveInterval").textContent = Number(game.Settings.autosaveInterval).toLocaleString()
+    document.getElementById("currentUpdateInterval").textContent = Number(game.Settings.updateInterval).toLocaleString()
+  }
 }
 
 function updateLarge() {
@@ -222,7 +230,7 @@ function updateLarge() {
 }
 
 updateLarge();
-setInterval(updateLarge, 500);
+setInterval(updateLarge, game.Settings.updateInterval * 1000);
 
 function autosave() {
   setTimeout(autosave, game.Settings.autosaveInterval * 1000);
@@ -254,4 +262,25 @@ function buyBuilding(buildingId) {
       updateVisual();
     }
   }
+}
+
+function settings() {
+  if (document.getElementById("settingsContainer").style.display === "block") {
+    document.getElementById("settingsContainer").style.display = "none";
+  } else {
+    document.getElementById("settingsContainer").style.display = "block";
+  }
+}
+
+function applySettings() {
+    newAutosaveInt = document.getElementById("autosaveIntervalInput").value.trim()
+    if (Number(newAutosaveInt)) {
+        game.Settings.autosaveInterval = Number(newAutosaveInt)
+    }
+    newUpdateInt = document.getElementById("updateIntervalInput").value.trim()
+    if (Number(newUpdateInt) && game.Settings.updateInterval != Number(newUpdateInt)) {
+        game.Settings.updateInterval = Number(newUpdateInt)
+        save()
+        location.reload()
+    }
 }

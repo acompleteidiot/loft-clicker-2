@@ -36,9 +36,11 @@
       style="position: relative; width: 50%; margin: auto"
       class="container"
     >
-      <button class="imgButton" id="loftButton" onclick="loftClick()">
-        <img src="img/loftButton.png?raw=true" />
-      </button>
+      <div>
+        <button class="imgButton" id="loftButton" onclick="loftClick()">
+          <img src="img/loftButton.png?raw=true" />
+        </button>
+      </div>
       <p>
         <span id="burger">0</span> burgers <br />
         <span id="burgerpClick">0</span> burgers per click
@@ -49,8 +51,7 @@
         >
         <span id="loftPetsCostTracker" style="display: none"
           ><br />
-          next loft pet costs <span id="loftPetCost">0</span> burgers (is this
-          confusing sorry)</span
+          next loft pet costs <span id="loftPetCost">0</span> burgers</span
         >
         <span id="burgerPerSecond" style="display: none"
           ><br /><span id="burgerPerSecNum">0</span> burgers per second</span
@@ -102,8 +103,7 @@
         >
         <span id="woftPetsCostTracker" style="display: none"
           ><br />
-          next woft pet costs <span id="woftPetCost">0</span> hotdogs (is this
-          confusing sorry)</span
+          next woft pet costs <span id="woftPetCost">0</span> hotdogs</span
         >
       </p>
       <div id="woftBuildings">
@@ -118,6 +118,26 @@
       </div>
     </div>
   </div>
+  <div
+    id="settingsContainer"
+    class="container"
+    style="display: none"
+    position="center"
+    z-index="1000"
+  >
+    <div id="settingsContent">
+      <h><font size=6>Settings</font></h>
+      <br />
+      <p>Autosave Interval (currently <span id="currentAutosaveInterval">30</span>s)</p>
+      <textarea id="autosaveIntervalInput" class="settingsTextArea"></textarea>
+      <p>Game Tick Interval (game runs smoother NOT faster) (currently <span id="currentUpdateInterval">0.5</span>s)</p>
+      <textarea id="updateIntervalInput" class="settingsTextArea"></textarea>
+      <div position="fixed; left: 0; bottom: 0"><button id="applySettings" onclick="applySettings()">Apply</button></div>
+    </div>
+  </div>
+  <button id="settingsButton" onclick="settings()">
+    <img src="img/cogIcon.png?raw=true" />
+  </button>
 
   <!-- scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

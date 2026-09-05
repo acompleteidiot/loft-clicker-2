@@ -51,6 +51,21 @@ Retrieved 2026-09-04, License - CC BY-SA 3.0
     background-color: #1b1b1a;
 }
 
+.scrollingBox {
+  overflow-x: auto;
+  border:5px solid #1c1e1f;
+  padding-bottom:0px;
+}
+
+.scroll-item {
+  display: block;
+}
+
+.importantText {
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .settingsTextArea {
   resize: none;
   width: 60px;

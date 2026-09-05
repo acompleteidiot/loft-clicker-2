@@ -5,19 +5,25 @@ function reset() {
     Settings: {
       autosave: true,
       autosaveInterval: new Decimal(30),
-      updateInterval: new Decimal(0.5)
+      updateInterval: new Decimal(0.5),
     },
     Buildings: {
       loftPet: {
+        descName: "loft pet",
         cost: new Decimal(10),
         owned: new Decimal(0),
         power: new Decimal(1),
       },
       woftPet: {
+        descName: "woft pet",
         cost: new Decimal(20),
         owned: new Decimal(0),
         power: new Decimal(0.05),
       },
+    },
+    Visual: {
+      loftBuildingHover: new Decimal(0),
+      woftBuildingHover: new Decimal(0),
     },
     burger: new Decimal(0),
     burgerpClick: new Decimal(1),
@@ -32,10 +38,10 @@ function resetButton() {
   if (
     confirm("Are you sure you want to reset your game? This cannot be undone.")
   ) {
-    oldSettings = game.Settings
+    oldSettings = game.Settings;
     reset();
     for (let s = 0; s < game.Settings.length; i++) {
-        game.Settings[s] = oldSettings[s]
+      game.Settings[s] = oldSettings[s];
     }
     save();
     updateLarge();
@@ -140,8 +146,8 @@ function woftPowerCalc() {
 }
 
 function updateCurrency() {
-  timescale = 1/(game.Settings.updateInterval)
-  
+  timescale = 1 / game.Settings.updateInterval;
+
   // increase loft stuff
 
   game.burger = game.burger.add(burgerCalc().div(timescale));
@@ -159,29 +165,33 @@ function updateVisual() {
   document.getElementById("burgerpClick").textContent = game.burgerpClick
     .toNumber()
     .toLocaleString();
+  if (game.Visual.loftBuildingHover != 0) {
+    const buildingKeys = [null, "loftPet", "woftPet"]
+    let currentKey = buildingKeys[Number(game.Visual.loftBuildingHover)]
 
-  // loft pet stuff
-  document.getElementById("loftPets").textContent = game.Buildings.loftPet.owned
-    .toNumber()
-    .toLocaleString();
-  document.getElementById("loftPetCost").textContent =
-    game.Buildings.loftPet.cost.toNumber().toLocaleString();
+    const buildingHoverDesc = Array.from(
+    document.getElementById("loftBuildingDescription").getElementsByTagName("span")
+  )
+    let hoverDescBuilding = game.Buildings[currentKey];
+    if (hoverDescBuilding && buildingHoverDesc.length >= 4) {
+      buildingHoverDesc[0].textContent = hoverDescBuilding.descName;
+      buildingHoverDesc[1].textContent = hoverDescBuilding.cost
+        .toNumber()
+        .toLocaleString();
+      buildingHoverDesc[3].textContent = hoverDescBuilding.owned
+        .toNumber()
+        .toLocaleString();
+      buildingHoverDesc[2].textContent = hoverDescBuilding.owned.mul(
+        hoverDescBuilding.power,
+      ).toNumber().toLocaleString();
+    }
+  }
 
-  if (game.Buildings.loftPet.owned.gte(1)) {
-    document.getElementById("loftPetsTracker").style.display = "inline";
+  if (burgerCalc().gt(0)) {
     document.getElementById("burgerPerSecond").style.display = "inline";
     document.getElementById("burgerPerSecNum").textContent = burgerCalc()
       .toNumber()
       .toLocaleString();
-  }
-  if (game.burger.gte(10) || game.Buildings.loftPet.owned.gte(1)) {
-    document.getElementById("loftPet").style.opacity = "1";
-    document.getElementById("loftPetsCostTracker").style.display = "inline";
-  }
-  if (game.Buildings.loftPet.owned.eq(1)) {
-    document.getElementById("loftPetsPlural").style.display = "none";
-  } else {
-    document.getElementById("loftPetsPlural").style.display = "inline";
   }
 
   // update woft stuff
@@ -223,8 +233,12 @@ function updateVisual() {
 
   // settings
   if (document.getElementById("settingsContainer").style.display === "block") {
-    document.getElementById("currentAutosaveInterval").textContent = Number(game.Settings.autosaveInterval).toLocaleString()
-    document.getElementById("currentUpdateInterval").textContent = Number(game.Settings.updateInterval).toLocaleString()
+    document.getElementById("currentAutosaveInterval").textContent = Number(
+      game.Settings.autosaveInterval,
+    ).toLocaleString();
+    document.getElementById("currentUpdateInterval").textContent = Number(
+      game.Settings.updateInterval,
+    ).toLocaleString();
   }
 }
 
@@ -268,27 +282,40 @@ function buyBuilding(buildingId) {
   }
 }
 
+function hoverBuilding(type, buildingId) {
+  if (type == 1) {
+    game.Visual.loftBuildingHover = buildingId;
+  } else if (type == 2) {
+    game.Visual.woftBuildingHover = buildingId;
+  }
+}
+
 function settings() {
   if (document.getElementById("settingsContainer").style.display === "block") {
     document.getElementById("settingsContainer").style.display = "none";
-    document.getElementById("settingsBg").style.display = "none"
+    document.getElementById("settingsBg").style.display = "none";
   } else {
     document.getElementById("settingsContainer").style.display = "block";
-    document.getElementById("settingsBg").style.display = "block"
+    document.getElementById("settingsBg").style.display = "block";
   }
-  updateVisual()
+  updateVisual();
 }
 
 function applySettings() {
-    newAutosaveInt = document.getElementById("autosaveIntervalInput").value.trim()
-    if (Number(newAutosaveInt)) {
-        game.Settings.autosaveInterval = Number(newAutosaveInt)
-    }
-    newUpdateInt = document.getElementById("updateIntervalInput").value.trim()
-    if (Number(newUpdateInt) && game.Settings.updateInterval != Number(newUpdateInt)) {
-        game.Settings.updateInterval = Number(newUpdateInt)
-        save()
-        location.reload()
-    }
-    updateVisual()
+  newAutosaveInt = document
+    .getElementById("autosaveIntervalInput")
+    .value.trim();
+  if (Number(newAutosaveInt)) {
+    game.Settings.autosaveInterval = Number(newAutosaveInt);
+  }
+  newUpdateInt = document.getElementById("updateIntervalInput").value.trim();
+  if (
+    Number(newUpdateInt) &&
+    game.Settings.updateInterval != Number(newUpdateInt)
+  ) {
+    game.Settings.updateInterval = Number(newUpdateInt);
+    save();
+    location.reload();
+  }
+  updateVisual();
 }

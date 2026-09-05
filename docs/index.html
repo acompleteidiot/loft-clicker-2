@@ -42,30 +42,29 @@
         </button>
       </div>
       <p>
-        <span id="burger">0</span> burgers <br />
-        <span id="burgerpClick">0</span> burgers per click
-        <span id="loftPetsTracker" style="display: none"
-          ><br /><span id="loftPets">0</span> loft pet<span id="loftPetsPlural"
-            >s</span
-          ></span
-        >
-        <span id="loftPetsCostTracker" style="display: none"
-          ><br />
-          next loft pet costs <span id="loftPetCost">0</span> burgers</span
-        >
+        <span id="burger" class="importantText">0</span> burgers <br />
+        <span id="burgerpClick" class="importantText">0</span> burgers per click
         <span id="burgerPerSecond" style="display: none"
-          ><br /><span id="burgerPerSecNum">0</span> burgers per second</span
+          ><br /><span id="burgerPerSecNum" class="importantText">0</span> burgers per second</span
         >
       </p>
-      <div id="loftBuildings">
+      <div id="loftBuildings" class="scrollingBox">
         <button
-        
           id="loftPet"
-          style="opacity: 0"
           onclick="buyBuilding(1)"
+          class="imgButton scroll-item"
+          onmouseenter="hoverBuilding(1, 1)"
         >
-          Buy Loft Pet
+          <img src="img/loftPet.png?raw=true" />
         </button>
+      </div>
+      <div id="loftBuildingDescription">
+        <p>
+          <span>hover over a building</span> (hover to change) <br />
+          costs <b><span class="importantText">0</span></b> burgers <br />
+          currently producing <b><span class="importantText">0</span></b> burgers per second <br />
+          you currently have <b><span class="importantText">0</span></b>
+        </p>
       </div>
     </div>
     <div
@@ -98,7 +97,6 @@
       </p>
       <div id="woftBuildings">
         <button
-        
           id="woftPet"
           style="visibility: hidden"
           onclick="buyBuilding(2)"
@@ -128,7 +126,7 @@
     z-index="1000"
   >
     <div id="settingsContent">
-      <h><font size="6">Settings</font></h>
+      <h style="font-size: 30px">Settings</h>
       <br />
       <p>
         Autosave Interval (currently
@@ -145,15 +143,9 @@
         <button onclick="settings()">Exit</button>
       </div>
       <p></p>
-      <button id="resetButton" onclick="resetButton()">
-        Reset Game
-      </button>
-      <button id="loadButton" onclick="loadFromString()">
-        Load Game
-      </button>
-      <button id="exportButton" onclick="exportToString()">
-        Export Game
-      </button>
+      <button id="resetButton" onclick="resetButton()">Reset Game</button>
+      <button id="loadButton" onclick="loadFromString()">Load Game</button>
+      <button id="exportButton" onclick="exportToString()">Export Game</button>
       <button id="saveButton" onclick="save()">Save Game</button>
     </div>
   </div>

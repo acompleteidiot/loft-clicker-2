@@ -270,6 +270,7 @@ function settings() {
   } else {
     document.getElementById("settingsContainer").style.display = "block";
   }
+  updateVisual()
 }
 
 function applySettings() {

@@ -118,6 +118,18 @@
       </div>
     </div>
   </div>
+  <button id="settingsButton" onclick="settings()">
+    <img src="img/cogIcon.png?raw=true" />
+  </button>
+  <div
+    class="fullscreen-box"
+    ,
+    z-index="999"
+    id="settingsBg"
+    style="display: none"
+  >
+    <!-- background for settings -->
+  </div>
   <div
     id="settingsContainer"
     class="container"
@@ -126,18 +138,24 @@
     z-index="1000"
   >
     <div id="settingsContent">
-      <h><font size=6>Settings</font></h>
+      <h><font size="6">Settings</font></h>
       <br />
-      <p>Autosave Interval (currently <span id="currentAutosaveInterval">30</span>s)</p>
+      <p>
+        Autosave Interval (currently
+        <span id="currentAutosaveInterval">30</span>s)
+      </p>
       <textarea id="autosaveIntervalInput" class="settingsTextArea"></textarea>
-      <p>Game Tick Interval (game runs smoother NOT faster) (currently <span id="currentUpdateInterval">0.5</span>s)</p>
+      <p>
+        Game Tick Interval (game runs smoother NOT faster) (currently
+        <span id="currentUpdateInterval">0.5</span>s)
+      </p>
       <textarea id="updateIntervalInput" class="settingsTextArea"></textarea>
-      <div position="fixed; left: 0; bottom: 0"><button id="applySettings" onclick="applySettings()">Apply</button></div>
+      <div position="fixed; left: 0; bottom: 0">
+        <button id="applySettings" onclick="applySettings()">Apply</button>
+        <button onclick="settings()">Exit</button>
+      </div>
     </div>
   </div>
-  <button id="settingsButton" onclick="settings()">
-    <img src="img/cogIcon.png?raw=true" />
-  </button>
 
   <!-- scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

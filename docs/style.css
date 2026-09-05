@@ -76,3 +76,23 @@ Retrieved 2026-09-04, License - CC BY-SA 3.0
   border: 10px solid #1c1e1f;
   padding: 10px;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+  }
+
+/* 2. Style the full-screen transparent box */
+.fullscreen-box {
+  position: fixed;      
+  top: 0;
+  left: 0;
+  width: 100vw;      
+  height: 100vh;         
+  background-color: rgba(0, 0, 0, 0.7); 
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+}

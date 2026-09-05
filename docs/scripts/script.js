@@ -32,7 +32,11 @@ function resetButton() {
   if (
     confirm("Are you sure you want to reset your game? This cannot be undone.")
   ) {
+    oldSettings = game.Settings
     reset();
+    for (let s = 0; s < game.Settings.length; i++) {
+        game.Settings[s] = oldSettings[s]
+    }
     save();
     updateLarge();
     location.reload();
@@ -267,8 +271,10 @@ function buyBuilding(buildingId) {
 function settings() {
   if (document.getElementById("settingsContainer").style.display === "block") {
     document.getElementById("settingsContainer").style.display = "none";
+    document.getElementById("settingsBg").style.display = "none"
   } else {
     document.getElementById("settingsContainer").style.display = "block";
+    document.getElementById("settingsBg").style.display = "block"
   }
   updateVisual()
 }

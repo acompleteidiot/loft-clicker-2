@@ -187,7 +187,12 @@ function updateVisual() {
       buildingHoverDesc[0].textContent = buildingInfo.descName
       buildingHoverDesc[1].textContent = buildingInfo.cost.toNumber().toLocaleString()
       buildingHoverDesc[2].textContent = buildingCalc(1).toNumber().toLocaleString()
-      buildingHoverDesc[3].textContent = buildingInfo.cost.toNumber().toLocaleString()
+      if (buildingCalc(1) != 1) {
+        buildingHoverDesc[3].style.display = "inline"
+      } else {
+        buildingHoverDesc[3].style.display = "none"
+      }
+      buildingHoverDesc[4].textContent = buildingInfo.cost.toNumber().toLocaleString()
     }
   }
 
@@ -196,6 +201,21 @@ function updateVisual() {
     document.getElementById("burgerPerSecNum").textContent = burgerCalc()
       .toNumber()
       .toLocaleString();
+  }
+  if (game.burger != 1) {
+    document.getElementById("burgerCountPlural").style.display = "inline"
+  } else {
+    document.getElementById("burgerCountPlural").style.display = "none"
+  }
+  if (game.burgerpClick != 1) {
+    document.getElementById("burgerPerClickPlural").style.display = "inline"
+  } else {
+    document.getElementById("burgerPerClickPlural").style.display = "none"
+  }
+  if (burgerCalc() != 1) {
+    document.getElementById("burgerPerSecPlural").style.display = "inline"
+  } else {
+    document.getElementById("burgerPerSecPlural").style.display = "none"
   }
 
   // update woft stuff

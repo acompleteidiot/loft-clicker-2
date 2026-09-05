@@ -57,19 +57,9 @@
           ><br /><span id="burgerPerSecNum">0</span> burgers per second</span
         >
       </p>
-      <button class="button" id="resetButton" onclick="resetButton()">
-        Reset Game
-      </button>
-      <button class="button" id="loadButton" onclick="loadFromString()">
-        Load Game
-      </button>
-      <button class="button" id="exportButton" onclick="exportToString()">
-        Export Game
-      </button>
-      <button class="button" id="saveButton" onclick="save()">Save Game</button>
       <div id="loftBuildings">
         <button
-          class="button"
+        
           id="loftPet"
           style="opacity: 0"
           onclick="buyBuilding(1)"
@@ -108,7 +98,7 @@
       </p>
       <div id="woftBuildings">
         <button
-          class="button"
+        
           id="woftPet"
           style="visibility: hidden"
           onclick="buyBuilding(2)"
@@ -154,6 +144,17 @@
         <button id="applySettings" onclick="applySettings()">Apply</button>
         <button onclick="settings()">Exit</button>
       </div>
+      <p></p>
+      <button id="resetButton" onclick="resetButton()">
+        Reset Game
+      </button>
+      <button id="loadButton" onclick="loadFromString()">
+        Load Game
+      </button>
+      <button id="exportButton" onclick="exportToString()">
+        Export Game
+      </button>
+      <button id="saveButton" onclick="save()">Save Game</button>
     </div>
   </div>
 

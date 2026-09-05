@@ -6,15 +6,18 @@ function reset() {
             autosave: true,
             autosaveInterval: 30
         },
-        loftClicks: new Decimal(0),
-        loftClickspClick: new Decimal(1),
         Buildings: {
             loftPet: {
                 cost: new Decimal(10),
                 owned: new Decimal(0),
                 power: new Decimal(1)
             }
-        }
+        },
+        loftClicks: new Decimal(0),
+        loftClickspClick: new Decimal(1),
+        woftClicks: new Decimal(0),
+        woftClickspClick: new Decimal(1),
+        woftPower: new Decimal(1)
     }
 }
 
@@ -35,6 +38,19 @@ function load() {
     reset()
     let loadgame = JSON.parse(localStorage.getItem("loftclickersave"))
     if (loadgame != null) {loadGame(loadgame, game)}
+}
+
+function loadFromString() {
+    let loadgame = atob(prompt("Please enter your save string:"))
+    if (loadgame) {
+        loadgame = JSON.parse(loadgame)
+        if (loadgame != null) {loadGame(loadgame, game)}
+    }
+}
+
+function exportToString() {
+    let saveString = btoa(JSON.stringify(game))
+    prompt("Here is your save string. Copy it and keep it safe!", saveString)
 }
 
 function loadGame(loadgame, gameObject = game) {
@@ -107,6 +123,10 @@ function updateVisual() {
     } else {
         document.getElementById("loftPetsPlural").style.display = "inline"
     }
+
+    // update woft stuff
+    document.getElementById("woftClicks").textContent = game.woftClicks.toNumber().toLocaleString()
+    document.getElementById("woftClickspClick").textContent = game.woftClickspClick.toNumber().toLocaleString()
 }
 
 function updateLarge() {

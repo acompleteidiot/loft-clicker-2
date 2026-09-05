@@ -40,8 +40,8 @@
         <img src="img/loftButton.png?raw=true" />
       </button>
       <p>
-        <span id="loftClicks">0</span> loft clicks <br />
-        <span id="loftClickspClick">0</span> loft clicks per click
+        <span id="loftClicks">0</span> lofts pet <br />
+        <span id="loftClickspClick">0</span> lofts pet per click
         <span id="loftPetsTracker" style="display: none"
           ><br /><span id="loftPets">0</span> loft pet<span id="loftPetsPlural"
             >s</span
@@ -49,12 +49,14 @@
         >
         <span id="loftPetsCostTracker" style="display: none"
           ><br />
-          next loft pet costs <span id="loftPetCost">0</span> loft clicks</span
+          next loft pet costs <span id="loftPetCost">0</span> lofts pet (is this confusing sorry)</span
         >
       </p>
       <button class="button" id="resetButton" onclick="resetButton()">
         Reset Game
       </button>
+      <button class="button" id="loadButton" onclick="loadFromString()">Load Game</button>
+      <button class="button" id="exportButton" onclick="exportToString()">Export Game</button>
       <button class="button" id="saveButton" onclick="save()">Save Game</button>
       <div id="loftBuildings">
         <button
@@ -71,6 +73,10 @@
       <button class="imgButton" id="woftButton" onclick="woftClick()">
         <img src="img/woftButton.png?raw=true" />
       </button>
+      <p>
+        <span id="woftClicks">0</span> wofts pet <br />
+        <span id="woftClickspClick">0</span> base wofts pet per click
+      </p>
     </div>
   </div>
 
@@ -79,4 +85,5 @@
   <script src="scripts/break_eternity.js"></script>
   <script src="scripts/script.js"></script>
   <script src="scripts/loft.js"></script>
+  <script src="scripts/woft.js"></script>
 </body>

@@ -76,14 +76,39 @@
       <p>
         <span id="woftClicks">0</span> wofts pet <br />
         <span id="woftClickspClick">0</span> base wofts pet per click
+        <span id="woftPowerTracker" style="display: none"
+          ><br /><span id="woftPower">0</span>x woft power</span
+        >
+        <span id="woftClickspClickButFr" style="display: none"
+          ><br /><span id="woftClickspClickButFr">0</span> actual wofts pet per click</span
+        >
+        <span id="woftPetsTracker" style="display: none"
+          ><br /><span id="woftPets">0</span> woft pet<span id="woftPetsPlural"
+            >s</span
+          ></span
+        >
+        <span id="woftPetsCostTracker" style="display: none"
+          ><br />
+          next woft pet costs <span id="woftPetCost">0</span> wofts pet (is this confusing sorry)</span
+        >
       </p>
+      <div id="woftBuildings">
+        <button
+          class="button"
+          id="woftPet"
+          style="visibility: hidden"
+          onclick="buyBuilding(2)"
+        >
+          Buy Woft Pet
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="scripts/woft.js"></script>
   <script src="scripts/break_eternity.js"></script>
   <script src="scripts/script.js"></script>
   <script src="scripts/loft.js"></script>
-  <script src="scripts/woft.js"></script>
 </body>

@@ -283,4 +283,5 @@ function applySettings() {
         save()
         location.reload()
     }
+    updateVisual()
 }

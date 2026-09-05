@@ -1,5 +1,7 @@
 var game = {};
 
+const mobile = window.navigator.maxTouchPoints > 0
+
 function reset() {
   game = {
     Settings: {
@@ -257,7 +259,15 @@ function autosave() {
 
 autosave();
 
-function buyBuilding(buildingId) {
+function buyBuilding(type, buildingId) {
+  if (mobile) {
+    if (game.Visual.loftBuildingHover == buildingId || game.Visual.woftBuildingHover == buildingId) {
+      // do nothing so it continues
+    } else {
+      hoverBuilding(type, buildingId)
+      return
+    }
+  }
   if (buildingId == 1) {
     if (game.burger.gte(game.Buildings.loftPet.cost)) {
       game.burger = game.burger.sub(game.Buildings.loftPet.cost);

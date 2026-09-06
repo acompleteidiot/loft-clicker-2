@@ -43,6 +43,7 @@ function reset() {
       loftBuildingHover: new Decimal(0),
       woftBuildingHover: new Decimal(0),
       currentTabTheme: "loft",
+      unlockedTabThemes: ["loft"],
     },
     burger: new Decimal(0),
     burgerpClick: new Decimal(1),
@@ -81,8 +82,10 @@ function load() {
   changeFavicon(iconKeyMapHeaderStyle[game.Visual.currentTabTheme]);
   document.title = titleKeyMapHeaderStyle[game.Visual.currentTabTheme];
   themeSelect.value = game.Visual.currentTabTheme;
-  document.getElementById("updateIntervalInput").value = game.Settings.updateInterval
-  document.getElementById("autosaveIntervalInput").value = game.Settings.autosaveInterval
+  document.getElementById("updateIntervalInput").value =
+    game.Settings.updateInterval;
+  document.getElementById("autosaveIntervalInput").value =
+    game.Settings.autosaveInterval;
 }
 
 function loadFromString() {
@@ -93,6 +96,7 @@ function loadFromString() {
       loadGame(loadgame, game);
     }
   }
+  save()
   location.reload();
 }
 
@@ -295,14 +299,27 @@ function updateVisual() {
       game.Settings.updateInterval,
     ).toLocaleString();
   }
-  if (game.burger.gte(1000)) {
-    styleOptions[3].style.display = "block"
+  if (
+    game.burger.gte(1000) &&
+    !game.Visual.unlockedTabThemes.includes("soft")
+  ) {
+    game.Visual.unlockedTabThemes.push("soft");
   }
-  if (game.burger.gte(10000)) {
-    styleOptions[2].style.display = "block"
+  if (
+    game.burger.gte(10000) &&
+    !game.Visual.unlockedTabThemes.includes("announcer")
+  ) {
+    game.Visual.unlockedTabThemes.push("announcer");
   }
-  if (game.woftUnlock) {
-    styleOptions[1].style.display = "block"
+  if (game.woftUnlock && !game.Visual.unlockedTabThemes.includes("woft")) {
+    game.Visual.unlockedTabThemes.push("woft");
+  }
+  for (let option = 0; option < styleOptions.length; option++) {
+    if (game.Visual.unlockedTabThemes.includes(styleOptions[option].value)) {
+      styleOptions[option].style.display = "block";
+    } else {
+      styleOptions[option].style.display = "none";
+    }
   }
 }
 

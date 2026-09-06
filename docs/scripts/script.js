@@ -425,7 +425,7 @@ function buyBuilding(type, buildingId) {
     if (game.burger.gte(game.Buildings.loftChef.cost)) {
       game.burger = game.burger.sub(game.Buildings.loftChef.cost);
       game.Buildings.loftChef.owned = game.Buildings.loftChef.owned.add(1);
-      game.Buildings.loftChef.cost = new Decimal(1.15)
+      game.Buildings.loftChef.cost = new Decimal(1.25)
         .pow(game.Buildings.loftChef.owned)
         .mul(100)
         .floor();

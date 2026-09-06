@@ -41,15 +41,15 @@ Retrieved 2026-09-04, License - CC BY-SA 3.0
 */
 
 #settingsContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -15%;
-    margin-left: -22%;
+    position: fixed; 
+    inset: 0;        
+    margin: auto;    
+    
     width: 40vw;
     height: 60vh;
     background-color: #1b1b1a;
 }
+
 
 .scrollingBox {
   overflow-x: auto;
@@ -80,7 +80,7 @@ Retrieved 2026-09-04, License - CC BY-SA 3.0
   top: 10px;
   width: 80px;
   height: 80px;
-  left: 47.7%;
+  left: calc(50% - 44px);
 }
 
 #containerContainer {

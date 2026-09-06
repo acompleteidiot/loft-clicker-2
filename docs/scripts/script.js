@@ -26,6 +26,7 @@ function reset() {
       autosave: true,
       autosaveInterval: new Decimal(30),
       updateInterval: new Decimal(0.5),
+      offlineProgress: true,
     },
     Buildings: {
       loftPet: {
@@ -60,6 +61,7 @@ function reset() {
     woftPower: new Decimal(1),
     woftUnlock: false,
     unlockedBuildings: ["loftPet"],
+    timeSaved: Date.now(),
   };
 }
 
@@ -77,6 +79,7 @@ function resetButton() {
 }
 
 function save() {
+  game.timeSaved = Date.now();
   localStorage.setItem("loftclickersave", JSON.stringify(game));
 }
 
@@ -93,6 +96,15 @@ function load() {
     game.Settings.updateInterval;
   document.getElementById("autosaveIntervalInput").value =
     game.Settings.autosaveInterval;
+  document.getElementById("offlineProgressCheckbox").checked =
+    game.Settings.offlineProgress;
+  if (game.Settings.offlineProgress && game.timeSaved) {
+    const balancedTime =
+      (Date.now() - game.timeSaved) * game.Settings.updateInterval;
+    if (balancedTime > 0) {
+      updateCurrency(balancedTime);
+    }
+  }
 }
 
 function loadFromString() {
@@ -190,8 +202,8 @@ function woftPowerCalc() {
   return production.mul(productionMult).pow(productionExp);
 }
 
-function updateCurrency() {
-  timescale = 1 / game.Settings.updateInterval;
+function updateCurrency(timePerUpdate) {
+  timescale = 1 / timePerUpdate;
 
   // increase loft stuff
 
@@ -280,11 +292,16 @@ function updateVisual() {
     document.getElementById("burgerPerSecPlural").style.display = "none";
   }
 
-  if (game.Buildings.loftPet.owned.gte(10) && !game.unlockedBuildings.includes("loftChef")) {
-    game.unlockedBuildings.push("loftChef")
+  if (
+    game.Buildings.loftPet.owned.gte(10) &&
+    !game.unlockedBuildings.includes("loftChef")
+  ) {
+    game.unlockedBuildings.push("loftChef");
   }
 
-  const loftBuildings = document.getElementById("loftBuildings").getElementsByTagName("button")
+  const loftBuildings = document
+    .getElementById("loftBuildings")
+    .getElementsByTagName("button");
   for (let option = 0; option < loftBuildings.length; option++) {
     if (game.unlockedBuildings.includes(loftBuildings[option].id)) {
       loftBuildings[option].style.display = "block";
@@ -331,14 +348,6 @@ function updateVisual() {
   }
 
   // settings
-  if (document.getElementById("settingsContainer").style.display === "block") {
-    document.getElementById("currentAutosaveInterval").textContent = Number(
-      game.Settings.autosaveInterval,
-    ).toLocaleString();
-    document.getElementById("currentUpdateInterval").textContent = Number(
-      game.Settings.updateInterval,
-    ).toLocaleString();
-  }
   if (
     game.burger.gte(1000) &&
     !game.Visual.unlockedTabThemes.includes("soft")
@@ -370,7 +379,7 @@ function updateVisual() {
 }
 
 function updateLarge() {
-  updateCurrency();
+  updateCurrency(game.Settings.updateInterval);
   updateVisual();
 }
 
@@ -496,3 +505,11 @@ themeSelect.addEventListener("change", (event) => {
   document.title = titleKeyMapHeaderStyle[selectedValue];
   game.Visual.currentTabTheme = selectedValue;
 });
+
+document
+  .getElementById("offlineProgressCheckbox")
+  .addEventListener("change", (event) => {
+    game.Settings.offlineProgress = document.getElementById(
+      "offlineProgressCheckbox",
+    ).checked;
+  });

@@ -10,12 +10,14 @@ const iconKeyMapHeaderStyle = {
   woft: "./img/woftButton.png?raw=true",
   announcer: "./img/announcerIcon.png?raw=true",
   soft: "./img/softIcon.png?raw=true",
+  bird: "./img/birdIcon.png?raw=true",
 };
 const titleKeyMapHeaderStyle = {
   loft: "Loft Clicker 2",
   woft: "Woft Clicker 2",
   announcer: "Announcersoft Clicker 2",
   soft: "Soft Clicker 2",
+  bird: "Say's Phoebe Clicker 2",
 };
 
 function reset() {
@@ -96,7 +98,7 @@ function loadFromString() {
       loadGame(loadgame, game);
     }
   }
-  save()
+  save();
   location.reload();
 }
 
@@ -313,6 +315,12 @@ function updateVisual() {
   }
   if (game.woftUnlock && !game.Visual.unlockedTabThemes.includes("woft")) {
     game.Visual.unlockedTabThemes.push("woft");
+  }
+  if (
+    game.Buildings.loftPet.owned.gte(20) &&
+    !game.Visual.unlockedTabThemes.includes("bird")
+  ) {
+    game.Visual.unlockedTabThemes.push("bird");
   }
   for (let option = 0; option < styleOptions.length; option++) {
     if (game.Visual.unlockedTabThemes.includes(styleOptions[option].value)) {

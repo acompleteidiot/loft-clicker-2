@@ -54,7 +54,10 @@ Retrieved 2026-09-04, License - CC BY-SA 3.0
 .scrollingBox {
   overflow-x: auto;
   border:5px solid #1c1e1f;
-  padding-bottom:0px;
+  padding:5px;
+  padding-bottom:2px;
+  display: flex;
+  gap:5px;
 }
 
 .scroll-item {

@@ -40,6 +40,12 @@ function reset() {
         owned: new Decimal(0),
         power: new Decimal(0.05),
       },
+      loftChef: {
+        descName: "loft chef",
+        cost: new Decimal(100),
+        owned: new Decimal(0),
+        power: new Decimal(5),
+      },
     },
     Visual: {
       loftBuildingHover: new Decimal(0),
@@ -53,6 +59,7 @@ function reset() {
     hotdogpClick: new Decimal(1),
     woftPower: new Decimal(1),
     woftUnlock: false,
+    unlockedBuildings: ["loftPet"],
   };
 }
 
@@ -62,9 +69,7 @@ function resetButton() {
   ) {
     oldSettings = game.Settings;
     reset();
-    for (let s = 0; s < game.Settings.length; i++) {
-      game.Settings[s] = oldSettings[s];
-    }
+    game.Settings = oldSettings;
     save();
     updateLarge();
     location.reload();
@@ -157,7 +162,7 @@ function loadGame(loadgame, gameObject = game) {
 load();
 
 function burgerCalc() {
-  production = game.Buildings.loftPet.power.mul(game.Buildings.loftPet.owned);
+  production = buildingCalc(1).add(buildingCalc(3));
 
   productionMult = new Decimal(1);
 
@@ -169,6 +174,9 @@ function burgerCalc() {
 function buildingCalc(buildingId) {
   if (buildingId == 1) {
     return game.Buildings.loftPet.owned.mul(game.Buildings.loftPet.power);
+  } else if (buildingId == 2) {
+  } else if (buildingId == 3) {
+    return game.Buildings.loftChef.owned.mul(game.Buildings.loftChef.power);
   }
 }
 
@@ -227,7 +235,24 @@ function updateVisual() {
       } else {
         buildingHoverDesc[3].style.display = "none";
       }
-      buildingHoverDesc[4].textContent = buildingInfo.cost
+      buildingHoverDesc[4].textContent = buildingInfo.owned
+        .toNumber()
+        .toLocaleString();
+    } else if (game.Visual.loftBuildingHover == 3) {
+      let buildingInfo = game.Buildings.loftChef;
+      buildingHoverDesc[0].textContent = buildingInfo.descName;
+      buildingHoverDesc[1].textContent = buildingInfo.cost
+        .toNumber()
+        .toLocaleString();
+      buildingHoverDesc[2].textContent = buildingCalc(3)
+        .toNumber()
+        .toLocaleString();
+      if (buildingCalc(3) != 1) {
+        buildingHoverDesc[3].style.display = "inline";
+      } else {
+        buildingHoverDesc[3].style.display = "none";
+      }
+      buildingHoverDesc[4].textContent = buildingInfo.owned
         .toNumber()
         .toLocaleString();
     }
@@ -253,6 +278,19 @@ function updateVisual() {
     document.getElementById("burgerPerSecPlural").style.display = "inline";
   } else {
     document.getElementById("burgerPerSecPlural").style.display = "none";
+  }
+
+  if (game.Buildings.loftPet.owned.gte(10) && !game.unlockedBuildings.includes("loftChef")) {
+    game.unlockedBuildings.push("loftChef")
+  }
+
+  const loftBuildings = document.getElementById("loftBuildings").getElementsByTagName("button")
+  for (let option = 0; option < loftBuildings.length; option++) {
+    if (game.unlockedBuildings.includes(loftBuildings[option].id)) {
+      loftBuildings[option].style.display = "block";
+    } else {
+      loftBuildings[option].style.display = "none";
+    }
   }
 
   // update woft stuff
@@ -371,7 +409,6 @@ function buyBuilding(type, buildingId) {
         .pow(game.Buildings.loftPet.owned)
         .mul(10)
         .floor();
-      updateVisual();
     }
   }
   if (buildingId == 2) {
@@ -382,9 +419,19 @@ function buyBuilding(type, buildingId) {
         .pow(game.Buildings.woftPet.owned)
         .mul(10)
         .floor();
-      updateVisual();
     }
   }
+  if (buildingId == 3) {
+    if (game.burger.gte(game.Buildings.loftChef.cost)) {
+      game.burger = game.burger.sub(game.Buildings.loftChef.cost);
+      game.Buildings.loftChef.owned = game.Buildings.loftChef.owned.add(1);
+      game.Buildings.loftChef.cost = new Decimal(1.15)
+        .pow(game.Buildings.loftChef.owned)
+        .mul(100)
+        .floor();
+    }
+  }
+  updateVisual();
 }
 
 function hoverBuilding(type, buildingId) {

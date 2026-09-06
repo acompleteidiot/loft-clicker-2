@@ -1,7 +1,22 @@
 var game = {};
 
+const themeSelect = document.getElementById("settingsTabThemeSelect");
+
 const mobile = window.navigator.maxTouchPoints > 0;
 console.log(mobile);
+
+const iconKeyMapHeaderStyle = {
+  loft: "./img/loftIcon.png?raw=true",
+  woft: "./img/woftButton.png?raw=true",
+  announcer: "./img/announcerIcon.png?raw=true",
+  soft: "./img/softIcon.png?raw=true",
+};
+const titleKeyMapHeaderStyle = {
+  loft: "Loft Clicker 2",
+  woft: "Woft Clicker 2",
+  announcer: "Announcersoft Clicker 2",
+  soft: "Soft Clicker 2",
+};
 
 function reset() {
   game = {
@@ -27,6 +42,7 @@ function reset() {
     Visual: {
       loftBuildingHover: new Decimal(0),
       woftBuildingHover: new Decimal(0),
+      currentTabTheme: "loft",
     },
     burger: new Decimal(0),
     burgerpClick: new Decimal(1),
@@ -62,6 +78,11 @@ function load() {
   if (loadgame != null) {
     loadGame(loadgame, game);
   }
+  changeFavicon(iconKeyMapHeaderStyle[game.Visual.currentTabTheme]);
+  document.title = titleKeyMapHeaderStyle[game.Visual.currentTabTheme];
+  themeSelect.value = game.Visual.currentTabTheme;
+  document.getElementById("updateIntervalInput").value = game.Settings.updateInterval
+  document.getElementById("autosaveIntervalInput").value = game.Settings.autosaveInterval
 }
 
 function loadFromString() {
@@ -72,7 +93,7 @@ function loadFromString() {
       loadGame(loadgame, game);
     }
   }
-  location.reload()
+  location.reload();
 }
 
 function exportToString() {
@@ -141,7 +162,7 @@ function burgerCalc() {
 
 function buildingCalc(buildingId) {
   if (buildingId == 1) {
-    return game.Buildings.loftPet.owned.mul(game.Buildings.loftPet.power)
+    return game.Buildings.loftPet.owned.mul(game.Buildings.loftPet.power);
   }
 }
 
@@ -167,6 +188,10 @@ function updateCurrency() {
   game.woftPower = game.woftPower.add(woftPowerCalc().div(timescale));
 }
 
+const styleOptions = document
+  .getElementById("settingsTabThemeSelect")
+  .getElementsByTagName("option");
+
 function updateVisual() {
   // update loft stuff
   document.getElementById("burger").textContent = game.burger
@@ -183,16 +208,22 @@ function updateVisual() {
     );
 
     if (game.Visual.loftBuildingHover == 1) {
-      let buildingInfo = game.Buildings.loftPet
-      buildingHoverDesc[0].textContent = buildingInfo.descName
-      buildingHoverDesc[1].textContent = buildingInfo.cost.toNumber().toLocaleString()
-      buildingHoverDesc[2].textContent = buildingCalc(1).toNumber().toLocaleString()
+      let buildingInfo = game.Buildings.loftPet;
+      buildingHoverDesc[0].textContent = buildingInfo.descName;
+      buildingHoverDesc[1].textContent = buildingInfo.cost
+        .toNumber()
+        .toLocaleString();
+      buildingHoverDesc[2].textContent = buildingCalc(1)
+        .toNumber()
+        .toLocaleString();
       if (buildingCalc(1) != 1) {
-        buildingHoverDesc[3].style.display = "inline"
+        buildingHoverDesc[3].style.display = "inline";
       } else {
-        buildingHoverDesc[3].style.display = "none"
+        buildingHoverDesc[3].style.display = "none";
       }
-      buildingHoverDesc[4].textContent = buildingInfo.cost.toNumber().toLocaleString()
+      buildingHoverDesc[4].textContent = buildingInfo.cost
+        .toNumber()
+        .toLocaleString();
     }
   }
 
@@ -203,19 +234,19 @@ function updateVisual() {
       .toLocaleString();
   }
   if (game.burger != 1) {
-    document.getElementById("burgerCountPlural").style.display = "inline"
+    document.getElementById("burgerCountPlural").style.display = "inline";
   } else {
-    document.getElementById("burgerCountPlural").style.display = "none"
+    document.getElementById("burgerCountPlural").style.display = "none";
   }
   if (game.burgerpClick != 1) {
-    document.getElementById("burgerPerClickPlural").style.display = "inline"
+    document.getElementById("burgerPerClickPlural").style.display = "inline";
   } else {
-    document.getElementById("burgerPerClickPlural").style.display = "none"
+    document.getElementById("burgerPerClickPlural").style.display = "none";
   }
   if (burgerCalc() != 1) {
-    document.getElementById("burgerPerSecPlural").style.display = "inline"
+    document.getElementById("burgerPerSecPlural").style.display = "inline";
   } else {
-    document.getElementById("burgerPerSecPlural").style.display = "none"
+    document.getElementById("burgerPerSecPlural").style.display = "none";
   }
 
   // update woft stuff
@@ -263,6 +294,15 @@ function updateVisual() {
     document.getElementById("currentUpdateInterval").textContent = Number(
       game.Settings.updateInterval,
     ).toLocaleString();
+  }
+  if (game.burger.gte(1000)) {
+    styleOptions[3].style.display = "block"
+  }
+  if (game.burger.gte(10000)) {
+    styleOptions[2].style.display = "block"
+  }
+  if (game.woftUnlock) {
+    styleOptions[1].style.display = "block"
   }
 }
 
@@ -361,3 +401,26 @@ function applySettings() {
   }
   updateVisual();
 }
+
+function changeFavicon(src) {
+  // Look for existing favicon links
+  let link = document.querySelector("link[rel~='icon']");
+
+  // If no favicon link exists, create one
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "icon";
+    document.head.appendChild(link);
+  }
+
+  // Update the image source path
+  link.href = src;
+}
+
+themeSelect.addEventListener("change", (event) => {
+  let selectedValue = themeSelect.value;
+  console.log("Selected theme:", selectedValue);
+  changeFavicon(iconKeyMapHeaderStyle[selectedValue]);
+  document.title = titleKeyMapHeaderStyle[selectedValue];
+  game.Visual.currentTabTheme = selectedValue;
+});

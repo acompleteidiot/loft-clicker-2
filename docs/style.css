@@ -48,6 +48,7 @@ Retrieved 2026-09-04, License - CC BY-SA 3.0
     width: 40vw;
     height: 60vh;
     background-color: #1b1b1a;
+    overflow-y: auto;
 }
 
 

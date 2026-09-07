@@ -99,8 +99,7 @@ function load() {
   document.getElementById("offlineProgressCheckbox").checked =
     game.Settings.offlineProgress;
   if (game.Settings.offlineProgress && game.timeSaved) {
-    const balancedTime =
-      (Date.now() - game.timeSaved) * game.Settings.updateInterval;
+    const balancedTime = (Date.now() - game.timeSaved) / 1000
     if (balancedTime > 0) {
       updateCurrency(balancedTime);
     }

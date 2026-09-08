@@ -17,7 +17,7 @@ const titleKeyMapHeaderStyle = {
   woft: "Woft Clicker 2",
   announcer: "Announcersoft Clicker 2",
   soft: "Soft Clicker 2",
-  bird: "Willow Flycatcher Clicker 2",
+  bird: "Least Sandpiper Clicker 2",
 };
 
 function reset() {
